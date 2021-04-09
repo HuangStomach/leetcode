@@ -20,7 +20,7 @@ public:
 class Solution {
 public:
     int getImportance(vector<Employee*> employees, int id) {
-        int res=0;
+        int res = 0;
         for (Employee* x : employees) {
             if (x->id == id) {
                 res += x->importance;
