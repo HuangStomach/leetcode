@@ -11,31 +11,34 @@
 
 using namespace std;
 
-string mostCommonWord(string paragraph, vector<string> &banned) {
-    paragraph += ' ';
-    string temp = "";
-    map<string, int> m;
-    set<string> ban(banned.begin(), banned.end());
-    for (char ch : paragraph) {
-        if (isalpha(ch)) {
-            temp += tolower(ch);
-            continue;
+class Solution {
+public:
+    string mostCommonWord(string paragraph, vector<string> &banned) {
+        paragraph += ' ';
+        string temp = "";
+        map<string, int> m;
+        set<string> ban(banned.begin(), banned.end());
+        for (char ch : paragraph) {
+            if (isalpha(ch)) {
+                temp += tolower(ch);
+                continue;
+            }
+            
+            if (!temp.empty()) {
+                m[temp]++;
+                temp.clear();
+            }
         }
-        
-        if (!temp.empty()) {
-            m[temp]++;
-            temp.clear();
-        }
+        vector<string> words;
+        for (auto p : m) words.push_back(p.first);
+
+        sort(words.begin(), words.end(), [&](string &s, string &p) { 
+            return m[s] > m[p];
+        });
+
+        if (banned.empty()) return words[0];
+
+        for (auto w : words) if (ban.find(w) == ban.end()) return w;
+        return "";
     }
-    vector<string> words;
-    for (auto p : m) words.push_back(p.first);
-
-    sort(words.begin(), words.end(), [&](string &s, string &p) { 
-        return m[s] > m[p];
-    });
-
-    if (banned.empty()) return words[0];
-
-    for (auto w : words) if (ban.find(w) == ban.end()) return w;
-    return "";
-}
+};
