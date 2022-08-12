@@ -18,7 +18,6 @@ public:
     }
 
     void first(function<void()> printFirst) {
-        
         // printFirst() outputs "first". Do not change or remove this line.
         printFirst();
         sem_post(&firstJobDone);
