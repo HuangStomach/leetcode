@@ -6,24 +6,21 @@
  * int pick(int target) 从 nums 中选出一个满足 nums[i] == target 的随机索引 i 。如果存在多个有效的索引，则每个索引的返回概率应当相等。
  */
 #include <vector>
+#include <unordered_map>
 
 using namespace std;
 
 class Solution {
+    unordered_map<int, vector<int>> pos;
 public:
-    vector<int> res;
     Solution(vector<int> &nums) {
-        res = nums;
+        for (int i = 0; i < nums.size(); ++i) {
+            pos[nums[i]].push_back(i);
+        }
     }
 
     int pick(int target) {
-        int c = 0;
-        int index = 0;
-        for (int i = 0; i < res.size(); i++) {
-            if (res[i] != target) continue;
-            c++;
-            if (rand() % c == 0) index = i;
-        }
-        return index;
+        auto &indices = pos[target];
+        return indices[rand() % indices.size()];
     }
 };
