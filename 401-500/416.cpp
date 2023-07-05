@@ -10,18 +10,23 @@ class Solution {
 public:
     bool canPartition(vector<int>& nums) {
         int len = nums.size();
-        int sum = 0;
-        for (int n : nums)  sum += n;
+        int sum = 0, maxNum = 0;
+        for (int n : nums)  {
+            sum += n;
+            maxNum = max(maxNum, n);
+        }
         if (sum % 2 != 0) return false;
 
         int weight = sum / 2;
-        int dp[weight + 1];
-        dp[0] = 1;
+        if (maxNum > weight) return false;
+
+        vector<int> dp(weight + 1, 0);
+        dp[0] = true;
         for (int num : nums) {
-            for (int i = weight; i >= num; i--) {
-                dp[i] += dp[i - num];
+            for (int j = weight; j >= num; --j) {
+                dp[j] |= dp[j - num];
             }
         }
-        return dp[weight] != 0;
+        return dp[weight];
     }
 };
