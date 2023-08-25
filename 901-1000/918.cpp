@@ -18,12 +18,12 @@ public:
         q.push_back({0, pre});
         for (int i = 1; i < 2 * n; i++) {
             while (!q.empty() && q.front().first < i - n) {
-                q.pop_front();
+                q.pop_front(); // i - n > 0 的时候已经成环 此时 q.front().first < i - n 已经套圈没必要了滚吧
             }
             pre += nums[i % n];
             res = max(res, pre - q.front().second);
             while (!q.empty() && q.back().second >= pre) {
-                q.pop_back();
+                q.pop_back(); // 前缀和需要更小的 不然怎么做差？
             }
             q.push_back({i, pre});
         }
