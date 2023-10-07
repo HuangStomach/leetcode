@@ -12,7 +12,6 @@ public:
         int res = 0;
 
         int left = 0;
-        int right = 0;
         int zero = 0;
 
         for(int right = 0; right < nums.size(); right++){
